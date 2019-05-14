@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
+const jwt = require('jsonwebtoken');
+const jwtPrivateKey = require('../../config/config');
+
 
 const User = new mongoose.Schema({
 
@@ -38,6 +41,11 @@ function validateUser(user) {
         password: Joi.string().min(6).max(1024).required()
     }
     return Joi.validate(user,schema);
+}
+
+User.methods.generateAuthToken = function(id,email){
+    const token = jwt.sign({_id:id,email:email,exp: Math.floor(Date.now() / 1000)+(1200 * 1200)},jwtPrivateKey.JWT_SECRET,)
+    return token;
 }
 
 exports.ValidateUser = validateUser;

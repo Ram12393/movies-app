@@ -4,10 +4,10 @@ const {
 } = require('../models/auth.model');
 const HTTP = require('http-status');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 exports.createUser = async (req, res, next) => {
     try {
-
         const {
             error
         } = ValidateUser(req.body);
@@ -36,10 +36,33 @@ exports.createUser = async (req, res, next) => {
         });
         next();
     }catch (e) {
-        return next();
+        return next(e);
     }
 } 
 
 exports.login = async (req, res, next) => {
-
+    try{
+        let user = await User.findOne({email:req.body.email});
+        if(!user){
+            return res.status(HTTP.BAD_REQUEST).send({
+                message:"Invalid Email or Password!"
+            })
+        }
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
+        if(!validPassword){
+            return res.status(HTTP.BAD_REQUEST).send({
+                message:"Invalid Email or Password!"
+            })
+        }
+        let userObj = user; 
+        user = new User();
+        const token = user.generateAuthToken(userObj._id,userObj.email);
+        res.status(HTTP.OK).send({
+            message:'Login Successfully',
+            token:token
+        });
+        next();
+    }catch(e){
+        return next()
+    }
 }

@@ -3,15 +3,15 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const config = require('./config/config')
-
+const user = require('./api/routes/auth.route');
 
 //Mongoose connection to Database
 
 mongoose.connect(config.MONGO_URI).then(
-    res=>{
+    res => {
         console.log('MongoDB Successfully connected');
     }
-).then(res=>{
+).catch(res => {
     console.log(`MongoDB didn't connect, Please check the connection`);
 });
 
@@ -23,13 +23,13 @@ app.use(bodyParser.urlencoded({
 }))
 
 
-// app.use('/api/vi/auth',)
+app.use('/api/vi/auth', user)
 
 
 const port = process.env.port || config.PORT;
 
 
 //express listening port number
-app.listen(port,()=>{
-console.log(`server is running on port number ${port}`)
+app.listen(port, () => {
+    console.log(`server is running on port number ${port}`)
 })

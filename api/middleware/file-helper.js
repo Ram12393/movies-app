@@ -3,9 +3,9 @@ const multer = require('multer');
 const multerS3 = require('multer-s3');
 
 aws.config.update({
-        accessKeyID:'AKIAIBMRFDA2GJQ2SWHA',    
-        SecretAccessKey:'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',
-        region:'us-east-1'
+        accessKeyId:'AKIAJUYVGRADWQN3OOOQ',    
+        secretAccessKey:'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',
+        region:'ap-south-1'
 });
 
 const s3 = new aws.S3();
@@ -22,7 +22,7 @@ const upload = multer({
     fileFilter,
     storage: multerS3({
       s3,
-      bucket: 'demo.moveies.com',
+      bucket: 'demo.movies.com',
     //   acl: 'public-read',
     //   metadata: function (req, file, cb) {
     //     cb(null, {fieldName: file.fieldname});

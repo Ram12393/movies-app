@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 const config = require('./config/config')
 const user = require('./api/routes/auth.route');
-
+const files = require('./api/routes/file-upload.route')
 //Mongoose connection to Database
 
 mongoose.connect(config.MONGO_URI).then(
@@ -23,8 +23,8 @@ app.use(bodyParser.urlencoded({
 }))
 
 
-app.use('/api/vi/auth', user)
-
+app.use('/api/vi/auth', user);
+app.use('/api/vi/',files);
 
 const port = process.env.port || config.PORT;
 

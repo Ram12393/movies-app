@@ -3,9 +3,9 @@ const multer = require('multer');
 const multerS3 = require('multer-s3');
 
 aws.config.update({
-        accessKeyID:'AIAIBMRFDA2GJQ2SWHA',    
-        SecretAccessKey:'DA3hJEbcyUtWOI/FXRmtAsm0t6niBi+cn+RZBVR',
-        region:'ap-south-1'
+        accessKeyID:'AKIAIBMRFDA2GJQ2SWHA',    
+        SecretAccessKey:'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',
+        region:'us-east-1'
 });
 
 const s3 = new aws.S3();
@@ -23,11 +23,12 @@ const upload = multer({
     storage: multerS3({
       s3,
       bucket: 'demo.moveies.com',
-      acl: 'public-read',
-      metadata: function (req, file, cb) {
-        cb(null, {fieldName: file.fieldname});
-      },
+    //   acl: 'public-read',
+    //   metadata: function (req, file, cb) {
+    //     cb(null, {fieldName: file.fieldname});
+    //   },
       key: function (req, file, cb) {
+          console.log("***************************",file);
         cb(null, Date.now().toString())
       }
     })

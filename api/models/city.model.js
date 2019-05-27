@@ -7,7 +7,7 @@ const CitySchema = new mongoose.Schema({
         maxlength:50,
     },
     id:{
-        type: Schema.Types.ObjectId,
+        
         required:false,
         unique : true,
         // default:151,

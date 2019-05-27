@@ -4,7 +4,9 @@ const app = express();
 const mongoose = require('mongoose');
 const config = require('./config/config')
 const user = require('./api/routes/auth.route');
-const files = require('./api/routes/file-upload.route')
+const files = require('./api/routes/file-upload.route');
+const city = require('./api/routes/city.route');
+const area = require('./api/routes/area.route')
 //Mongoose connection to Database
 
 mongoose.connect(config.MONGO_URI).then(
@@ -25,6 +27,8 @@ app.use(bodyParser.urlencoded({
 
 app.use('/api/vi/auth', user);
 app.use('/api/vi/',files);
+app.use('/api/vi/',city);
+app.use('/api/vi/',area);
 
 const port = process.env.port || config.PORT;
 

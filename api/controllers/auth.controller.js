@@ -59,7 +59,7 @@ exports.login = async (req, res, next) => {
         let userObj = user;
         user = new User();
         const token = user.generateAuthToken(userObj._id, userObj.email);
-        res.header('x-auth-token', token).status(HTTP.OK).send({
+        res.header('Authorization', token).status(HTTP.OK).send({
             message: 'Login Successfully',
             token: token
         });
@@ -70,6 +70,7 @@ exports.login = async (req, res, next) => {
 }
 
 exports.changePassword = async (req, res, next) => {
+    console.log(req.user)
     const user = await User.findOne({
         email: req.user.email
     });

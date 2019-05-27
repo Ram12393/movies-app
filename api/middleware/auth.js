@@ -3,7 +3,7 @@ const HTTP = require('http-status')
 const config = require('../../config/config');
 
 function auth(req, res, next) {
-    const token = req.header('x-auth-token');
+    const token = req.header('Authorization');
     if (!token) {
         return res.status(HTTP.UNAUTHORIZED).send({
             error: 'Access denied. Token not provided'
@@ -20,4 +20,6 @@ function auth(req, res, next) {
     }
 }
 
-module.exports = auth;
+
+module.exports =auth;
+// module.exports =isAdmin;

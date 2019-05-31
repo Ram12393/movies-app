@@ -1,9 +1,13 @@
-const multer = require('multer');
-const aws = require('aws-sdk');
+const express = require('express');
+const upload = require('../middleware/file-helper');
 
-aws.config.update({
-    accessKeyID: "AKIAI3ODUDIZN2YD46RQ",
-    secretAccessKey: "OU66Emefu1T3vDCzJtFsCxf6hjFmautgvaBCQ / GX"
-})
+const imageUpload = upload.single('image');
 
-const s3 = aws.S3();
+exports.fileUpload = async(req,res)=>{
+    imageUpload(req, res, function(err, some) {
+        if (err) {
+          return res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}] });
+        }
+        return res.json({'imageUrl': req.file.location});
+      });
+}

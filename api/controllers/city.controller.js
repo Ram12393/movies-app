@@ -3,17 +3,14 @@ const HTTP = require('http-status');
 
 exports.createCity = async (req, res, next) => {
     try {
+        let lastInserRecord = await City.find({}).sort('-1');
+        if (!lastInserRecord.length) {
+            lastInserRecord = [{
+                id: 151
+            }]
+        }
+        req.body.id = lastInserRecord[0].id + 1
         const city = new City(req.body);
-        // city.id = 
-        // city = await City.fin({
-        //     $inc: {
-        //         id: 1
-        //     }
-        // }, {
-        //     new: true
-        // }, )
-        // console.log(city);
-        // return
         await city.save()
         res.status(HTTP.OK).send({
             message: 'City successfully saved'

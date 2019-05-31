@@ -9,7 +9,7 @@ exports.createCity = async (req, res, next) => {
                 id: 151
             }]
         }
-        req.body.id = lastInserRecord[0].id + 1
+        req.body.id = lastInserRecord[0].id + 1;
         const city = new City(req.body);
         await city.save()
         res.status(HTTP.OK).send({

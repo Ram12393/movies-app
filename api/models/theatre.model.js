@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const theatreSchema = new mongoose.Schema({
+const TheatreSchema = new mongoose.Schema({
     theatre_name: {
         type: String,
         required: true,
@@ -14,10 +14,10 @@ const theatreSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Area'
     },
-    feedback: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Feedback'
-    },
+    // feedback: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Feedback'
+    // },
     address: {
         type: String,
         required: true
@@ -28,8 +28,10 @@ const theatreSchema = new mongoose.Schema({
     },
     schedule: [{
         time: {
-            type: String,
+            type: Date,
             required: true
         }
     }]
 })
+
+module.exports = mongoose.model('Theatre', TheatreSchema);

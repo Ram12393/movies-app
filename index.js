@@ -7,6 +7,7 @@ const user = require('./api/routes/auth.route');
 const files = require('./api/routes/file-upload.route');
 const city = require('./api/routes/city.route');
 const area = require('./api/routes/area.route')
+const theatre = require('./api/routes/theatre.route');
 //Mongoose connection to Database
 
 mongoose.connect(config.MONGO_URI).then(
@@ -29,6 +30,7 @@ app.use('/api/vi/auth', user);
 app.use('/api/vi/',files);
 app.use('/api/vi/',city);
 app.use('/api/vi/',area);
+app.use('/api/vi/',theatre);
 
 const port = process.env.port || config.PORT;
 

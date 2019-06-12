@@ -8,6 +8,8 @@ const files = require('./api/routes/file-upload.route');
 const city = require('./api/routes/city.route');
 const area = require('./api/routes/area.route')
 const theatre = require('./api/routes/theatre.route');
+const feedback = require('./api/routes/feeback.route');
+const actors = require('./api/routes/actors.route');
 //Mongoose connection to Database
 
 mongoose.connect(config.MONGO_URI).then(
@@ -27,10 +29,11 @@ app.use(bodyParser.urlencoded({
 
 
 app.use('/api/vi/auth', user);
-app.use('/api/vi/',files);
-app.use('/api/vi/',city);
-app.use('/api/vi/',area);
-app.use('/api/vi/',theatre);
+// app.use('/api/vi/',files);
+// app.use('/api/vi/',city);
+// app.use('/api/vi/',area);
+app.use('/api/vi/',files,city,area,theatre,feedback,actors);
+// app.use('/api/vi/',feedback);
 
 const port = process.env.port || config.PORT;
 

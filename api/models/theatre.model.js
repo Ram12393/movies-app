@@ -14,10 +14,10 @@ const TheatreSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Area'
     },
-    // feedback: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Feedback'
-    // },
+    // feedback: [{
+    //     type: mongoose.Schema.Types.Mixed,
+    //     default: {}
+    // }],
     address: {
         type: String,
         required: true
@@ -28,7 +28,7 @@ const TheatreSchema = new mongoose.Schema({
     },
     schedule: [{
         time: {
-            type: Date,
+            type: String,
             required: true
         }
     }]

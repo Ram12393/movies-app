@@ -10,8 +10,14 @@ function auth(req, res, next) {
         })
     }
     try {
-        const decode = jwt.verify(token, config.JWT_SECRET);
-        req.user = decode;
+        const decode = jwt.verify(token, config.JWT_SECRET, (err, decode) => {
+            if (err) {
+                return res.status(HTTP.UNAUTHORIZED).send({
+                    token: 'token expired'
+                })
+            }
+            req.user = decode;
+        });
         next();
     } catch (e) {
         return res.send(HTTP.BAD_REQUEST).send({
@@ -21,5 +27,5 @@ function auth(req, res, next) {
 }
 
 
-module.exports =auth;
+module.exports = auth;
 // module.exports =isAdmin;

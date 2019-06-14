@@ -10,6 +10,8 @@ const area = require('./api/routes/area.route')
 const theatre = require('./api/routes/theatre.route');
 const feedback = require('./api/routes/feeback.route');
 const actors = require('./api/routes/actors.route');
+const crew = require('./api/routes/crew.route');
+
 //Mongoose connection to Database
 
 mongoose.connect(config.MONGO_URI).then(
@@ -32,7 +34,7 @@ app.use('/api/vi/auth', user);
 // app.use('/api/vi/',files);
 // app.use('/api/vi/',city);
 // app.use('/api/vi/',area);
-app.use('/api/vi/',files,city,area,theatre,feedback,actors);
+app.use('/api/vi/', files, city, area, theatre, feedback, actors, crew);
 // app.use('/api/vi/',feedback);
 
 const port = process.env.port || config.PORT;

@@ -25,10 +25,8 @@ const MoviesSchema = new mongoose.Schema({
         }
     }],
     actors: [{
-        actor: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Actors'
-        }
     }],
     release_date: {
         type: Date,
@@ -43,10 +41,8 @@ const MoviesSchema = new mongoose.Schema({
         required: true
     },
     caste: [{
-        caste_name: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Caste'
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Crew'
     }],
     movie_review: [{
         total_reviews: {

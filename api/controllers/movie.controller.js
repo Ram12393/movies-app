@@ -16,13 +16,12 @@ exports.createMovie = async (req, res, next) => {
 
 exports.allMovies = async (req, res, next) => {
     try {
-        const movies = await Movie.find().populate([{
-                path: 'actors.actor',
-            },
-            {
-                path: 'caste.caste_name'
-            },
-        ]);
+        const movies = await Movie.find().
+        populate([{
+            path: 'actors'
+        }, {
+            path: 'caste'
+        }]);
         res.status(HTTP.OK).send({
             title: 'Movie List',
             data: movies

@@ -20,7 +20,7 @@ exports.allTheatres = async (req, res, next) => {
             path: 'city_name'
         }, {
             path: 'area_name'   
-        }])
+        }]);
         res.status(HTTP.OK).send({
             title: 'All Theatres ',
             data: theatres

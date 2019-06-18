@@ -19,13 +19,13 @@ const MoviesSchema = new mongoose.Schema({
         required: true
     },
     movie_type: [{
-        movie_type: {
+        type: {
             type: String,
             required: true
         }
     }],
     actors: [{
-        actors: {
+        actor: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Actors'
         }
@@ -43,9 +43,22 @@ const MoviesSchema = new mongoose.Schema({
         required: true
     },
     caste: [{
-        caste: {
+        caste_name: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Caste'
         }
+    }],
+    movie_review: [{
+        total_reviews: {
+            type: Number,
+            default: {}
+        },
+        rating: {
+            type: Number,
+            default: {}
+        }
+
     }]
 })
+
+module.exports = mongoose.model('Movie', MoviesSchema)

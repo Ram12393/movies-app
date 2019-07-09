@@ -11,7 +11,7 @@ function auth(req, res, next) {
     }
     try {
         // const decode = jwt.verify(token, config.JWT_SECRET, (err, decode) => {
-        jwt.verify(token, config.JWT_SECRET, (err, decode) => {
+        jwt.verify(token.substring(7), config.JWT_SECRET, (err, decode) => {
             if (err) {
                 return res.status(HTTP.UNAUTHORIZED).send({
                     token: 'token expired or invalid'
@@ -29,4 +29,3 @@ function auth(req, res, next) {
 
 
 module.exports = auth;
-

@@ -101,7 +101,7 @@ exports.userDetails = async (req, res, next) => {
     try {
         let userInfo = await User.findById({
             _id: req.user._id
-        }).select("-password");
+        }).select("-password"); //omiting password field here
 
         res.status(HTTP.OK).send({
             title: 'User Details',

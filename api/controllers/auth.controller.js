@@ -5,6 +5,7 @@ const {
 const HTTP = require('http-status');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const lodash = require('lodash')
 
 exports.createUser = async (req, res, next) => {
     try {
@@ -70,7 +71,6 @@ exports.login = async (req, res, next) => {
 }
 
 exports.changePassword = async (req, res, next) => {
-    console.log(req.user)
     const user = await User.findOne({
         email: req.user.email
     });
@@ -94,4 +94,21 @@ exports.changePassword = async (req, res, next) => {
         message: 'password successfully chaanged'
     });
     next()
+}
+
+exports.userDetails = async (req, res, next) => {
+    console.log(req.user)
+    try {
+        let userInfo = await User.findById({
+            _id: req.user._id
+        }).select("-password");
+
+        res.status(HTTP.OK).send({
+            title: 'User Details',
+            data: userInfo
+        })
+        next()
+    } catch {
+        return next()
+    }
 }

@@ -1,11 +1,21 @@
-const MoviewReview = require('../models/movie-review.model');
+const {
+    MoviewReview,
+    ValidateReview
+} = require('../models/movie-review.model');
 const HTTP = require('http-status');
 const mongoose = require('mongoose');
 
 
 exports.createReview = async (req, res, next) => {
     try {
-
+        const {
+            error
+        } = ValidateReview(req.body);
+        if (error) {
+            return res.status(HTTP.BAD_REQUEST).send({
+                error: error.details[0].message
+            });
+        }
         const movie = mongoose.Types.ObjectId.isValid(req.body.movie_id);
         if (!movie) {
             return res.status(HTTP.NOT_FOUND).send({
@@ -26,6 +36,14 @@ exports.reviewsByMovieID = async (req, res, next) => {
 
     try {
 
+        const {
+            error
+        } = ValidateUser(req.body);
+        if (error) {
+            return res.status(HTTP.BAD_REQUEST).send({
+                error: error.details[0].message
+            });
+        }
         const movie = mongoose.Types.ObjectId.isValid(req.params.id);
         if (!movie) {
             return res.status(HTTP.NOT_FOUND).send({

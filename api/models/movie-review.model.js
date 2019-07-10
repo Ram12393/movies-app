@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Joi = require('joi');
 
 const MovieReviewSchema = new mongoose.Schema({
 
@@ -17,4 +18,13 @@ const MovieReviewSchema = new mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model('MoviewReview', MovieReviewSchema);
+function validateReview(review) {
+    const schema = {
+        review: Joi.string().required(),
+        rating: Joi.number().required().max(5),
+    }
+    return Joi.validate(review, schema);
+}
+
+exports.ValidateReview = validateReview;
+exports.MovieReviewSchema = mongoose.model('MoviewReview', MovieReviewSchema);

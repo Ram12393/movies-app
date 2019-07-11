@@ -1,16 +1,33 @@
-const Movie = require('../models/movie.model');
+const {
+    Movie,
+    ValidateMovie
+} = require('../models/movie.model');
 const HTTP = require('http-status');
 
 exports.createMovie = async (req, res, next) => {
     try {
+        const {
+            error
+        } = ValidateMovie(req.body)
+        if (error) {
+            return res.status(HTTP.BAD_REQUEST).send({
+                error: error.details[0].message
+            })
+        }
         const movie = new Movie(req.body);
-        movie.save();
+        await movie.save();
+
         res.status(HTTP.OK).send({
             title: 'Movie',
             message: 'Movie Successfully created'
         })
     } catch (e) {
-        return next(e)
+        //  next(e => {
+        res.send({
+            error: e.errmsg
+        })
+        // })
+        // return next(e)
     }
 }
 

@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+const Joi = require('joi');
 
 const MoviesSchema = new mongoose.Schema({
     movie_name: {
+        type: String,
         required: true,
         unique: true,
-        type: String
     },
     movie_poster: {
         required: true,
@@ -25,8 +26,8 @@ const MoviesSchema = new mongoose.Schema({
         }
     }],
     actors: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Actors'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Actors',
     }],
     release_date: {
         type: Date,
@@ -42,19 +43,36 @@ const MoviesSchema = new mongoose.Schema({
     },
     caste: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Crew'
+        ref: 'Crew',
     }],
-    movie_review: [{
-        total_reviews: {
+    movie_review: {
+        no_of_reviews: {
             type: Number,
-            default: {}
+            default: null
         },
-        rating: {
+        overall_rating: {
             type: Number,
-            default: {}
+            default: null
         }
 
-    }]
+    }
 })
 
-module.exports = mongoose.model('Movie', MoviesSchema)
+function validateMovie(review) {
+    const schema = {
+        movie_name: Joi.string().required(),
+        movie_poster: Joi.string().required(),
+        language: Joi.string().required(),
+        certificate: Joi.string().required(),
+        movie_type: Joi.required(),
+        actors: Joi.required(),
+        caste: Joi.array().required(),
+        release_date: Joi.date().required(),
+        duration: Joi.string().required(),
+        about_movie: Joi.string().required(),
+    }
+    return Joi.validate(review, schema);
+}
+
+exports.ValidateMovie = validateMovie;
+exports.Movie = mongoose.model('Movie', MoviesSchema)

@@ -2,8 +2,13 @@ const {
     MovieReview,
     ValidateReview
 } = require('../models/movie-review.model');
+
+const {
+    Movie
+} = require('../models/movie.model');
 const HTTP = require('http-status');
 const mongoose = require('mongoose');
+const _ = require('lodash');
 
 
 exports.createReview = async (req, res, next) => {
@@ -24,6 +29,25 @@ exports.createReview = async (req, res, next) => {
         }
         const review = new MovieReview(req.body);
         await review.save();
+
+        const existingReviews = await MovieReview.find({
+            movie_id: req.body.movie_id
+        });
+
+        const totalReviewCount = _.reduce(existingReviews, function (sum, n) {
+            return sum + n.rating;
+        }, 0);
+
+        await Movie.findByIdAndUpdate(
+            req.body.movie_id, {
+                $set: {
+                    movie_review: {
+                        no_of_reviews: existingReviews.length,
+                        overall_rating: (totalReviewCount / existingReviews.length).toFixed(1)
+                    }
+                }
+            }
+        )
         res.status(HTTP.OK).send({
             message: 'Movie Review successfully posted'
         })

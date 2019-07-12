@@ -3,6 +3,10 @@ const {
     ValidateMovie
 } = require('../models/movie.model');
 const HTTP = require('http-status');
+const {
+    MovieReview
+} = require('../models/movie-review.model')
+const _ = require('lodash');
 
 exports.createMovie = async (req, res, next) => {
     try {
@@ -42,7 +46,22 @@ exports.allMovies = async (req, res, next) => {
         res.status(HTTP.OK).send({
             title: 'Movie List',
             data: movies
-        })
+        });
+
+    } catch (e) {
+        return next(e);
+    }
+}
+
+exports.movie = async (req, res, next) => {
+    try {
+        const movie = await Movie.findById({
+            _id: req.params.id
+        });
+        res.status(HTTP.OK).send({
+            title: 'Movie List',
+            data: movie
+        });
     } catch (e) {
         return next(e);
     }

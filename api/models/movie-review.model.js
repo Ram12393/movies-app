@@ -22,9 +22,10 @@ function validateReview(review) {
     const schema = {
         review: Joi.string().required(),
         rating: Joi.number().required().max(5),
+        movie_id: Joi.string().required()
     }
     return Joi.validate(review, schema);
 }
 
 exports.ValidateReview = validateReview;
-exports.MovieReviewSchema = mongoose.model('MoviewReview', MovieReviewSchema);
+exports.MovieReview = mongoose.model('MoviewReview', MovieReviewSchema);

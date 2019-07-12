@@ -9,5 +9,6 @@ router.post('/create-movie', [auth, isAdmin], movie.createMovie);
 router.get('/all-movies', movie.allMovies);
 router.post('/movie-review', moviewReview.createReview);
 router.get('/movie-review/:id', moviewReview.reviewsByMovieID);
+router.get('/movie/:id', movie.movie);
 
 module.exports = router;

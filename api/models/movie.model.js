@@ -11,6 +11,9 @@ const MoviesSchema = new mongoose.Schema({
         required: true,
         type: String
     },
+    slug: {
+        type: String
+    },
     language: {
         type: String,
         required: true

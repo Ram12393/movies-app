@@ -7,7 +7,7 @@ const {
     MovieReview
 } = require('../models/movie-review.model')
 const _ = require('lodash');
-
+const slugify = require('slugify');
 exports.createMovie = async (req, res, next) => {
     try {
         const {
@@ -18,7 +18,9 @@ exports.createMovie = async (req, res, next) => {
                 error: error.details[0].message
             })
         }
-        const movie = new Movie(req.body);
+        const movie = new Movie(req.body).set({
+            slug: slugify(req.body.movie_name)
+        });
         await movie.save();
 
         res.status(HTTP.OK).send({
@@ -26,12 +28,9 @@ exports.createMovie = async (req, res, next) => {
             message: 'Movie Successfully created'
         })
     } catch (e) {
-        //  next(e => {
         res.send({
             error: e.errmsg
         })
-        // })
-        // return next(e)
     }
 }
 
